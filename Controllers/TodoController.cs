@@ -14,12 +14,17 @@ public class TodoItemController:Controller
             _context = context;
         }
 
+    [Route("/Api/AddTodoItem/")]
     [HttpPost]
-    public ActionResult AddTodoItem(TodoItem todo)
+    public ActionResult AddTodoItem(string text)
     {
-        _context.TodoItem.Add(todo);
+        TodoItem newTodo = new()
+        {
+            Content = text
+        };
+        _context.TodoItem.Add(newTodo);
         _context.SaveChanges();
-        return View(todo);
+        return View(newTodo);
     }
 
     [HttpPost]
@@ -37,6 +42,7 @@ public class TodoItemController:Controller
         return RedirectToAction("UPDATE SUCCESS");
     }
 
+    [Route("/Api/ReadAllTodoItems")]
     [HttpPost]
     public JsonResult ReadAllTodoItem()
     {

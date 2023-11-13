@@ -8,7 +8,7 @@ const target = env.ASPNETCORE_HTTPS_PORT
   : "http://localhost:44420";
 //env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(';')[0] : 'http://localhost:23830';
 
-const context = ["/api/"];
+const context = ["/Api/"];
 
 const onError = (err, req, resp, target) => {
   console.error(`${err.message}`);

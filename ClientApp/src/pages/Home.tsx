@@ -17,30 +17,47 @@ const Home = () => {
   // let registeredItem: any[] = [];
   // console.log("check01");
   const [inputText, setInputText] = useState<string>("");
-  const [todoList, setTodoList] = useState<string[]>([]);
+  const [todoList, setTodoList] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    const FetchItem = async () => {
-      await axios
-        .post("/api/TodoItem/ReadAllTodoItem")
-        .then((response) => {
-          console.log(response);
-          // setTodoList(response);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    };
-    FetchItem();
+    axios
+      .post("/Api/ReadAllTodoItems")
+      .then((response) => {
+        setTodoList(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }, []);
+
+  useEffect(() => {
+    console.log(todoList);
+  }, [todoList]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
   };
 
   const handleClick = () => {
-    setTodoList([...todoList, inputText]);
+    axios
+      .post("/Api/AddTodoItem", inputText)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+    var inputJson: TodoItem = {
+      id: null,
+      content: inputText,
+      isCompleted: false,
+      isDeleted: false,
+      time: Number(new Date()),
+    };
+    console.log(inputJson);
+    setTodoList([...todoList, inputJson]);
     setInputText("");
   };
 
@@ -68,9 +85,12 @@ const Home = () => {
         <Grid item sm={8}>
           <div style={{ marginTop: 120 }}>
             {todoList != null &&
-              todoList.map((item, key) => (
+              todoList.map((item: any, key: any) => (
                 <FormGroup row sx={{ marginTop: 2 }}>
-                  <FormControlLabel control={<Checkbox />} label={item} />
+                  <FormControlLabel
+                    control={<Checkbox />}
+                    label={item.content}
+                  />
                   <IconButton>
                     <DeleteIcon />
                   </IconButton>
