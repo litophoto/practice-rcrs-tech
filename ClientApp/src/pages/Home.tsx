@@ -40,8 +40,22 @@ const Home = () => {
   };
 
   const handleClick = () => {
+    // const params = new URLSearchParams();
+    // params.append("Id", "");
+    // params.append("Content", inputText);
+    // params.append("IsComplete", "false");
+    // params.append("IsDeleted", "false");
+    // params.append("Time", new Date().toString());
+    var inputJson: TodoItem = {
+      Id: null,
+      Content: inputText,
+      IsCompleted: false,
+      IsDeleted: false,
+      Time: Number(new Date()),
+    };
+
     axios
-      .post("/Api/AddTodoItem", inputText)
+      .post("/Api/AddTodoItem", inputJson)
       .then((response) => {
         console.log(response.data);
       })
@@ -49,13 +63,12 @@ const Home = () => {
         console.log(e);
       });
 
-    var inputJson: TodoItem = {
-      id: null,
-      content: inputText,
-      isCompleted: false,
-      isDeleted: false,
-      time: Number(new Date()),
-    };
+    // const response = axios("/Api/AddTodoItem", {
+    //   method: "post",
+    //   headers: { "Content-Type": "application/json" },
+    //   data: JSON.stringify(inputJson),
+    // });
+
     console.log(inputJson);
     setTodoList([...todoList, inputJson]);
     setInputText("");

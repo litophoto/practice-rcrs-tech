@@ -1,7 +1,7 @@
 type TodoItem = {
-  id: int;
-  content: string;
-  isCompleted: boolean;
-  isDeleted: boolean;
-  time: number;
+  Id: int;
+  Content: string;
+  IsCompleted: boolean;
+  IsDeleted: boolean;
+  Time: number;
 };

@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Text.Json.Nodes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using todo_react_app.Models;
@@ -16,15 +17,14 @@ public class TodoItemController:Controller
 
     [Route("/Api/AddTodoItem/")]
     [HttpPost]
-    public ActionResult AddTodoItem(string text)
+    public ActionResult AddTodoItem([FromBody] string req)
     {
-        TodoItem newTodo = new()
-        {
-            Content = text
-        };
-        _context.TodoItem.Add(newTodo);
-        _context.SaveChanges();
-        return View(newTodo);
+        Console.WriteLine(req);
+
+
+        // _context.TodoItem.Add(todo);
+        // _context.SaveChanges();
+        return View(req);
     }
 
     [HttpPost]
